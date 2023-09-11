@@ -259,8 +259,7 @@ def coords(fn, seq, lower, upper):
     >>> coords(fn, seq, 1, 9)
     [[-2, 4], [1, 1], [3, 9]]
     """
-    "*** YOUR CODE HERE ***"
-    return ______
+    return [[seq[i], fn(seq[i])] for i in range(0, len(seq)) if fn(seq[i]) in range(lower, upper + 1)]
 
 
 def riffle(deck):
