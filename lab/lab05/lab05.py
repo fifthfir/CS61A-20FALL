@@ -11,13 +11,13 @@ def couple(s, t):
     [['c', 's'], [6, '1']]
     """
     assert len(s) == len(t)
-    c = []
-    for i in range(0,len(s)):
-        item = []
-        item.append(s[i])
-        item.append(t[i])
-        c.append(item)
-    return c
+    l = []
+    for i in range(0, len(s)):
+        l1 = []
+        l1.append(s[i])
+        l1.append(t[i])
+        l.append(l1)
+    return l
 
 from math import sqrt
 def distance(city_a, city_b):
