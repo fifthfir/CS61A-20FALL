@@ -158,7 +158,7 @@ def berry_finder(t):
     for branch in branches(t):
         if berry_finder(branch) == True:
             return True
-        #不能直接 return berry_finder(branch) 的原因是，是从头开始遍历的，如果直接return的话遇到第一个False就会结束。
+        #不能直接  return berry_finder(branch) 的原因是，是从头开始遍历的，如果直接return的话遇到第一个False就会结束。
     return False
 
 
