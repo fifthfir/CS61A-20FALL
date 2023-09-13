@@ -43,7 +43,7 @@ def end(s):
 def planet(size):
     """Construct a planet of some size."""
     assert size > 0
-    return ['planet', size]
+    return ['planet',size]
 
 def size(w):
     """Select the size of a planet."""
@@ -106,16 +106,13 @@ def balanced(m):
     """
     if is_planet(m):
         return True
-    elif is_mobile(m):
+    else:
         torque_left = length(left(m)) * total_weight(end(left(m)))
         torque_right = length(right(m)) * total_weight(end(right(m)))
         if torque_left == torque_right and balanced(end(left(m))) and balanced(end(right(m))):
             return True
-        else:
-            return False
-    else:
-        return False
-        
+    return False
+
 def totals_tree(m):
     """Return a tree representing the mobile with its total weight at the root.
 
@@ -147,8 +144,8 @@ def totals_tree(m):
     """
     if is_planet(m):
         return tree(total_weight(m))
-    return tree(total_weight(m),
-                [totals_tree(end(left(m))), totals_tree(end(right(m)))])
+    else:
+        return tree(total_weight(m), [totals_tree(end(left(m))), totals_tree(end(right(m)))])
 
 def replace_leaf(t, find_value, replace_value):
     """Returns a new tree where every leaf value equal to find_value has
@@ -180,8 +177,9 @@ def replace_leaf(t, find_value, replace_value):
     True
     """
     if is_leaf(t) and label(t) == find_value:
-        return tree(replace_value)
+            return tree(replace_value)
     return tree(label(t), [replace_leaf(b, find_value, replace_value) for b in branches(t)])
+
 
 def preorder(t):
     """Return a list of the entries in this tree in the order that they
