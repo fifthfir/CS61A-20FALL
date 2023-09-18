@@ -191,7 +191,15 @@ def preorder(t):
     >>> preorder(tree(2, [tree(4, [tree(6)])]))
     [2, 4, 6]
     """
-    "*** YOUR CODE HERE ***"
+    result = []
+    def helper(t):
+        if t is not None:
+            result.append(label(t))
+            for b in branches(t):
+                helper(b)
+    
+    helper(t)
+    return result
 
 
 def has_path(t, word):
@@ -223,8 +231,14 @@ def has_path(t, word):
     False
     """
     assert len(word) > 0, 'no path for empty word.'
-    "*** YOUR CODE HERE ***"
-
+    if len(word) == 1:
+        return label(t) == word
+    
+    if has_path(t, word[0]):
+        for b in branches(t):
+            if has_path(b, word[1]):
+                return has_path(b, word[1:])
+    return False
 
 def interval(a, b):
     """Construct an interval from a to b."""
@@ -232,11 +246,12 @@ def interval(a, b):
 
 def lower_bound(x):
     """Return the lower bound of interval x."""
-    "*** YOUR CODE HERE ***"
+    return x[0]
 
 def upper_bound(x):
     """Return the upper bound of interval x."""
-    "*** YOUR CODE HERE ***"
+    return x[1]
+    
 def str_interval(x):
     """Return a string representation of interval x.
     """
@@ -248,27 +263,31 @@ def add_interval(x, y):
     lower = lower_bound(x) + lower_bound(y)
     upper = upper_bound(x) + upper_bound(y)
     return interval(lower, upper)
+
 def mul_interval(x, y):
     """Return the interval that contains the product of any value in x and any
     value in y."""
-    p1 = x[0] * y[0]
-    p2 = x[0] * y[1]
-    p3 = x[1] * y[0]
-    p4 = x[1] * y[1]
-    return [min(p1, p2, p3, p4), max(p1, p2, p3, p4)]
-
+    lx = lower_bound(x)
+    ly = lower_bound(y)
+    ux = upper_bound(x)
+    uy = upper_bound(y)
+    p1 = lx * ly
+    p2 = lx * uy
+    p3 = ux * ly
+    p4 = ux * uy
+    return interval(min(p1, p2, p3, p4), max(p1, p2, p3, p4))
 
 def sub_interval(x, y):
     """Return the interval that contains the difference between any value in x
     and any value in y."""
-    "*** YOUR CODE HERE ***"
-
+    return interval(lower_bound(x) - upper_bound(y), upper_bound(x) - lower_bound(y))
 
 def div_interval(x, y):
     """Return the interval that contains the quotient of any value in x divided by
     any value in y. Division is implemented as the multiplication of x by the
     reciprocal of y."""
     "*** YOUR CODE HERE ***"
+    assert upper_bound(y) < 0 or lower_bound(y) > 0
     reciprocal_y = interval(1/upper_bound(y), 1/lower_bound(y))
     return mul_interval(x, reciprocal_y)
 
@@ -281,6 +300,7 @@ def par2(r1, r2):
     rep_r1 = div_interval(one, r1)
     rep_r2 = div_interval(one, r2)
     return div_interval(one, add_interval(rep_r1, rep_r2))
+
 def check_par():
     """Return two intervals that give different results for parallel resistors.
 
@@ -290,8 +310,8 @@ def check_par():
     >>> lower_bound(x) != lower_bound(y) or upper_bound(x) != upper_bound(y)
     True
     """
-    r1 = interval(1, 1) # Replace this line!
-    r2 = interval(1, 1) # Replace this line!
+    r1 = interval(1, 2) # Replace this line!
+    r2 = interval(3, 5) # Replace this line!
     return r1, r2
 
 
@@ -308,7 +328,27 @@ def quadratic(x, a, b, c):
     >>> str_interval(quadratic(interval(1, 3), 2, -3, 1))
     '0 to 10'
     """
-    "*** YOUR CODE HERE ***"
+    x0 = - b / (2 * a)
+    if lower_bound(x) < x0 < upper_bound(x):
+        if a > 0:
+            return interval(a * x0 ** 2 + b * x0 + c, 
+                            max(a * lower_bound(x) ** 2 + b * lower_bound(x) + c,
+                                a * upper_bound(x) ** 2 + b * upper_bound(x) + c))
+        else:
+            return interval(min(a * lower_bound(x) ** 2 + b * lower_bound(x) + c,
+                                a * upper_bound(x) ** 2 + b * upper_bound(x) + c),
+                                a * x0 ** 2 + b * x0 + c)
+    else:
+        if a > 0:
+            return interval(a * lower_bound(x) ** 2 + b * lower_bound(x) + c,
+                            a * upper_bound(x) ** 2 + b * upper_bound(x) + c)
+        else:
+            return interval(a * upper_bound(x) ** 2 + b * upper_bound(x) + c,
+                            a * lower_bound(x) ** 2 + b * lower_bound(x) + c)
+
+
+
+
 
 
 
