@@ -7,6 +7,7 @@ def f(x):
             return x + y + z
         return h
     return g
+
 a = f(1)
 b = a(2)
 total = b(3) + b(4)
