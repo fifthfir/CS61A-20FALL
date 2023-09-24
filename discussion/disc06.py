@@ -15,13 +15,16 @@ def memory(n):
         return result
     return f
 
+
 def mystery(p, q):
     p[1].extend(q)
     q.append(p[1:])
 
+
 p = [2, 3]
 q = [4, [p]]
 mystery(q, p)
+
 
 def group_by(s, fn):
     """
@@ -40,6 +43,7 @@ def group_by(s, fn):
 
     return grouped
 
+
 def add_this_many(x, el, s):
     """ Adds el to the end of s the number of times x occurs
     in s.
@@ -54,10 +58,12 @@ def add_this_many(x, el, s):
     times = s.count(x)
     s.extend([el] * times)
 
+
 def filter(iterable, fn):
     """
     >>> is_even = lambda x: x % 2 == 0
-    >>> list(filter(range(5), is_even)) # a list of the values yielded from the call to filter
+    >>> list(filter(range(5), is_even)) # a list of the values yielded\
+    from the call to filter
     [0, 2, 4]
     >>> all_odd = (2*y-1 for y in range(5))
     >>> list(filter(all_odd, is_even))
@@ -72,6 +78,7 @@ def filter(iterable, fn):
     for i in iterable:
         if fn(i):
             yield i
+
 
 def merge(a, b):
     """
@@ -96,4 +103,3 @@ def merge(a, b):
         else:
             yield first_b
             first_b = next(b)
-    
