@@ -126,7 +126,6 @@ def reverse_other(t):
     reverse_helper(t, True)
 
 
-
 class Link:
     """A linked list.
 
