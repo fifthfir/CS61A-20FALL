@@ -28,17 +28,20 @@
 
 
 (define (composed f g)
-  'YOUR-CODE-HERE
+  (lambda (x) (f (g x)))
 )
 
 
 (define lst
-  'YOUR-CODE-HERE
+  (list (list 1) 2 (list 3 4) 5)
 )
 
 
 (define (remove item lst)
-  'YOUR-CODE-HERE
+  (cond
+    ((null? lst) '())
+    ((= item (car lst)) (remove item (cdr lst)))
+    (else (cons (car lst) (remove item (cdr lst)))))
 )
 
 
