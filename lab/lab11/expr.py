@@ -241,7 +241,8 @@ class Value:
 
 
 class Number(Value):
-    """A plain number. Attempting to apply a `Number` (e.g. as in 4(2, 3)) will error.
+    """A plain number. Attempting to apply a `Number` (e.g. as in 4(2, 3))
+    will error.
 
     The `value` attribute is the Python number that this represents.
     """
@@ -284,7 +285,7 @@ class LambdaFunction(Value):
         >>> sub_lambda = read('lambda add: sub(10, add)').eval(global_env)
         >>> sub_lambda.apply([Number(8)])
         Number(2)
-        >>> add_lambda.apply([Number(8), Number(10)]) # Make sure you made a copy of env
+        >>> add_lambda.apply([Number(8), Number(10)]) # Make sure a copy of env
         Number(18)
         >>> read('(lambda x: lambda y: add(x, y))(3)(4)').eval(global_env)
         Number(7)
@@ -292,9 +293,10 @@ class LambdaFunction(Value):
         Number(4)
         """
         if len(self.parameters) != len(arguments):
-            raise TypeError("Oof! Cannot apply number {} to arguments {}".format(
-                comma_separated(self.parameters), comma_separated(arguments)))
-        "*** YOUR CODE HERE ***"
+            raise TypeError("Oof! Cannot apply number {} to arguments {}".format(comma_separated(self.parameters), comma_separated(arguments)))
+        parent_copy = self.parent.copy()
+        parent_copy.update(dict(zip(self.parameters, arguments)))
+        return self.body.eval(parent_copy)
 
     def __str__(self):
         definition = LambdaExpr(self.parameters, self.body)

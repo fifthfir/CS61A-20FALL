@@ -1,9 +1,9 @@
 class Buffer(object):
     """A Buffer provides a way of accessing a sequence one at a time.
     Its constructor takes a sequence, called the "source".
-    The Buffer supplies elements from source one at a time through its pop_first()
-    method. In addition, Buffer provides a current() method to look at the
-    next item to be supplied, without moving past it.
+    The Buffer supplies elements from source one at a time through its
+    pop_first() method. In addition, Buffer provides a current() method
+    to look at the next item to be supplied, without moving past it.
     >>> buf = Buffer(['(', '+', 15, 12, ')'])
     >>> buf.pop_first()
     '('
