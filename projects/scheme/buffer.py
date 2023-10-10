@@ -13,6 +13,7 @@ if sys.version_info[0] < 3:  # Python 2 compatibility
         if not line: raise EOFError()
         return line.rstrip('\r\n')
 
+
 class Buffer(object):
     """A Buffer provides a way of accessing a sequence of tokens across lines.
 
@@ -104,11 +105,13 @@ class Buffer(object):
         s += ' '.join(map(str, self.current_line[self.index:]))
         return s.strip()
 
+
 # Try to import readline for interactive history
 try:
     import readline
 except:
     pass
+
 
 class InputReader(object):
     """An InputReader is an iterable that prompts the user for input."""
@@ -119,6 +122,7 @@ class InputReader(object):
         while True:
             yield input(self.prompt)
             self.prompt = ' ' * len(self.prompt)
+
 
 class LineReader(object):
     """A LineReader is an iterable that prints lines after a prompt."""
