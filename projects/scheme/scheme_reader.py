@@ -146,10 +146,10 @@ def scheme_read(src):
         # END PROBLEM 1
     elif val == "'":
         # BEGIN PROBLEM 6
-        return Pair("quote", Pair(scheme_read(src), nil))
+        return Pair('quote', Pair(scheme_read(src), nil))
         # END PROBLEM 6
     elif val not in DELIMITERS:
-        return val
+        return val  # numbers and symbols
     else:
         raise SyntaxError('unexpected token: {0}'.format(val))
 
@@ -170,12 +170,11 @@ def read_tail(src):
             src.pop_first()
             return nil
             # END PROBLEM 1
-        else:
-            # BEGIN PROBLEM 1
-            first = scheme_read(src)
-            rest = read_tail(src)
-            return Pair(first, rest)
-            # END PROBLEM 1
+        # BEGIN PROBLEM 1
+        first = scheme_read(src)
+        rest = read_tail(src)
+        return Pair(first, rest)
+        # END PROBLEM 1
     except EOFError:
         raise SyntaxError('unexpected end of file')
 
@@ -201,8 +200,10 @@ def read_line(line):
     buf = Buffer(tokenize_lines([line]))
     result = scheme_read(buf)
     if buf.more_on_line:
-        raise SyntaxError(
-            "read_line's argument can only be a single element, but received multiple")
+        raise SyntaxError('''
+                          read_line's argument can only be a single element,
+                          but received multiple
+                          ''')
     return result
 
 
