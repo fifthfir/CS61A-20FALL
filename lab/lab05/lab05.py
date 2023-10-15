@@ -1,5 +1,10 @@
+from math import sqrt
+
+
 def couple(s, t):
-    """Return a list of two-element lists in which the i-th element is [s[i], t[i]].
+    """
+    Return a list of two-element lists
+    in which the i-th element is [s[i], t[i]].
 
     >>> a = [1, 2, 3]
     >>> b = [4, 5, 6]
@@ -11,15 +16,15 @@ def couple(s, t):
     [['c', 's'], [6, '1']]
     """
     assert len(s) == len(t)
-    l = []
+    lst = []
     for i in range(0, len(s)):
         l1 = []
         l1.append(s[i])
         l1.append(t[i])
-        l.append(l1)
-    return l
+        lst.append(l1)
+    return lst
 
-from math import sqrt
+
 def distance(city_a, city_b):
     """
     >>> city_a = make_city('city_a', 0, 1)
@@ -32,6 +37,7 @@ def distance(city_a, city_b):
     5.0
     """
     return ((get_lat(city_a) - get_lat(city_b))**2 + (get_lon(city_a) - get_lon(city_b))**2)**0.5
+
 
 def closer_city(lat, lon, city_a, city_b):
     """
@@ -57,6 +63,7 @@ def closer_city(lat, lon, city_a, city_b):
         closer = city_b
     return get_name(closer)
 
+
 def check_city_abstraction():
     """
     There's nothing for you to do for this function, it's just here for the extra doctest
@@ -80,7 +87,9 @@ def check_city_abstraction():
     >>> change_abstraction(False)
     """
 
+
 # Treat all the following code as being behind an abstraction layer, you shouldn't need to look at it!
+
 
 def make_city(name, lat, lon):
     """
@@ -93,9 +102,10 @@ def make_city(name, lat, lon):
     1
     """
     if change_abstraction.changed:
-        return {"name" : name, "lat" : lat, "lon" : lon}
+        return {"name": name, "lat": lat, "lon": lon}
     else:
         return [name, lat, lon]
+
 
 def get_name(city):
     """
@@ -108,6 +118,7 @@ def get_name(city):
     else:
         return city[0]
 
+
 def get_lat(city):
     """
     >>> city = make_city('Berkeley', 0, 1)
@@ -118,6 +129,7 @@ def get_lat(city):
         return city["lat"]
     else:
         return city[1]
+
 
 def get_lon(city):
     """
@@ -130,14 +142,16 @@ def get_lon(city):
     else:
         return city[2]
 
+
 def change_abstraction(change):
     change_abstraction.changed = change
+
 
 change_abstraction.changed = False
 
 
 def berry_finder(t):
-    """Returns True if t contains a node with the value 'berry' and 
+    """Returns True if t contains a node with the value 'berry' and
     False otherwise.
 
     >>> scrat = tree('berry')
@@ -156,9 +170,10 @@ def berry_finder(t):
     if str(label(t)) == 'berry':
         return True
     for branch in branches(t):
-        if berry_finder(branch) == True:
+        if berry_finder(branch):
             return True
-        #不能直接  return berry_finder(branch) 的原因是，是从头开始遍历的，如果直接return的话遇到第一个False就会结束。
+        # 不能直接  return berry_finder(branch) 的原因是，
+        # 是从头开始遍历的，如果直接return的话遇到第一个False就会结束。
     return False
 
 
@@ -196,17 +211,20 @@ def sprout_leaves(t, leaves):
           2
     """
     if is_leaf(t):
-        new_branches = [tree(leave,[]) for leave in leaves]
+        new_branches = [tree(leave, []) for leave in leaves]
         new_tree = tree(label(t), new_branches)
     else:
-        new_sprout_branches = [sprout_leaves(branch,leaves) for branch in branches(t)]
+        new_sprout_branches = [
+            sprout_leaves(branch, leaves) for branch in branches(t)]
         new_tree = tree(label(t), new_sprout_branches)
     return new_tree
+
 
 # Abstraction tests for sprout_leaves and berry_finder
 def check_abstraction():
     """
-    There's nothing for you to do for this function, it's just here for the extra doctest
+    There's nothing for you to do for this function,
+    it's just here for the extra doctest
     >>> change_abstraction(True)
     >>> scrat = tree('berry')
     >>> berry_finder(scrat)
@@ -311,7 +329,7 @@ def add_trees(t1, t2):
     """
     def add_label(t1, t2):
         return label(t1) + label(t2)
-    
+
     def add_branch(t1, t2):
         if not t1:
             return t2
@@ -321,6 +339,7 @@ def add_trees(t1, t2):
         return [first] + add_branch(t1[1:], t2[1:])
     t3 = tree(add_label(t1, t2), add_branch(branches(t1), branches(t2)))
     return t3
+
 
 def build_successors_table(tokens):
     """Return a dictionary: keys are words; values are lists of successors.
@@ -345,6 +364,7 @@ def build_successors_table(tokens):
         prev = word
     return table
 
+
 def construct_sent(word, table):
     """Prints a random sentence starting with word, sampling from
     table.
@@ -362,6 +382,7 @@ def construct_sent(word, table):
         word = random.choice(table[word])
     return result.strip() + word
 
+
 def shakespeare_tokens(path='shakespeare.txt', url='http://composingprograms.com/shakespeare.txt'):
     """Return the words of Shakespeare's plays as a list."""
     import os
@@ -372,14 +393,18 @@ def shakespeare_tokens(path='shakespeare.txt', url='http://composingprograms.com
         shakespeare = urlopen(url)
         return shakespeare.read().decode(encoding='ascii').split()
 
+
 tokens = shakespeare_tokens()
 table = build_successors_table(tokens)
+
 
 def random_sent():
     import random
     return construct_sent(random.choice(table['.']), table)
 
+
 # Tree ADT
+
 
 def tree(label, branches=[]):
     """Construct a tree with the given label value and a list of branches."""
@@ -392,6 +417,7 @@ def tree(label, branches=[]):
             assert is_tree(branch), 'branches must be trees'
         return [label] + list(branches)
 
+
 def label(tree):
     """Return the label value of a tree."""
     if change_abstraction.changed:
@@ -399,12 +425,14 @@ def label(tree):
     else:
         return tree[0]
 
+
 def branches(tree):
     """Return the list of branches of the given tree."""
     if change_abstraction.changed:
         return tree['branches']
     else:
         return tree[1:]
+
 
 def is_tree(tree):
     """Returns True if the given tree is a tree, and False otherwise."""
@@ -423,14 +451,17 @@ def is_tree(tree):
                 return False
         return True
 
+
 def is_leaf(tree):
     """Returns True if the given tree's list of branches is empty, and False
     otherwise.
     """
     return not branches(tree)
 
+
 def change_abstraction(change):
     change_abstraction.changed = change
+
 
 change_abstraction.changed = False
 
@@ -458,6 +489,7 @@ def print_tree(t, indent=0):
     for b in branches(t):
         print_tree(b, indent + 1)
 
+
 def copy_tree(t):
     """Returns a copy of t. Only for testing purposes.
 
@@ -468,4 +500,3 @@ def copy_tree(t):
     5
     """
     return tree(label(t), [copy_tree(b) for b in branches(t)])
-

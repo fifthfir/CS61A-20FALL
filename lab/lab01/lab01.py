@@ -18,7 +18,6 @@ def falling(n, k):
     return result
 
 
-
 def sum_digits(y):
     """Sum all the digits of y.
 
@@ -28,7 +27,7 @@ def sum_digits(y):
     12
     >>> sum_digits(1234567890)
     45
-    >>> a = sum_digits(123) # make sure that you are using return rather than print
+    >>> a = sum_digits(123) # make sure using return
     >>> a
     6
     """
@@ -36,7 +35,6 @@ def sum_digits(y):
     for i in str(y):
         result += int(i)
     return result
-
 
 
 def double_eights(n):
@@ -64,6 +62,3 @@ def double_eights(n):
         count += 1
     a = False
     return a
-
-
-

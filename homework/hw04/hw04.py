@@ -33,6 +33,7 @@ def make_bank(balance):
             return 'Invalid message'
     return bank
 
+
 def make_withdraw(balance, password):
     """Return a password-protected withdraw function.
 
@@ -69,7 +70,7 @@ def make_withdraw(balance, password):
         nonlocal balance
         nonlocal tries
         nonlocal attempts
-        
+
         while tries < 3:
             if message == password:
                 if balance < amount:
@@ -81,14 +82,17 @@ def make_withdraw(balance, password):
                 tries += 1
                 attempts.append(message)
                 return 'Incorrect password'
-            
-        return "Frozen account. Attempts: " + str(attempts)       
-    
+
+        return "Frozen account. Attempts: " + str(attempts)
+
     return bank
 
+
 def repeated(t, k):
-    """Return the first value in iterator T that appears K times in a row. Iterate through the items such that
-    if the same iterator is passed into repeated twice, it continues in the second call at the point it left off
+    """Return the first value in iterator T that appears K times in a row.
+    Iterate through the items such that
+    if the same iterator is passed into repeated twice, it continues in the
+    second call at the point it left off
     in the first.
 
     >>> s = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
@@ -116,6 +120,7 @@ def repeated(t, k):
             count = k
     return a
 
+
 def permutations(seq):
     """Generates all permutations of the given sequence. Each permutation is a
     list of the elements in SEQ in a different order. The permutations may be
@@ -126,12 +131,15 @@ def permutations(seq):
     <class 'generator'>
     >>> next(perms)
     [100]
-    >>> try: #this piece of code prints "No more permutations!" if calling next would cause an error
+    >>> try:
+        #this piece of code prints "No more permutations!"
+        #if calling next would cause an error
     ...     next(perms)
     ... except StopIteration:
     ...     print('No more permutations!')
     No more permutations!
-    >>> sorted(permutations([1, 2, 3])) # Returns a sorted list containing elements of the generator
+    >>> sorted(permutations([1, 2, 3]))
+    # Returns a sorted list containing elements of the generator
     [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
     >>> sorted(permutations((10, 20, 30)))
     [[10, 20, 30], [10, 30, 20], [20, 10, 30], [20, 30, 10], [30, 10, 20], [30, 20, 10]]
@@ -146,6 +154,7 @@ def permutations(seq):
         for i in permutations(seq[1:]):
             for j in range(len(seq)):
                 yield i[:j] + seq[:1] + i[j:]
+
 
 def make_joint(withdraw, old_pass, new_pass):
     """Return a password-protected withdraw function that has joint access to
@@ -188,6 +197,7 @@ def make_joint(withdraw, old_pass, new_pass):
     error = withdraw(0, old_pass)
     if type(error) == str:
         return error
+
     def joint(amount, new_new_pass):
         nonlocal new_pass
         if new_new_pass == new_pass:
@@ -195,6 +205,7 @@ def make_joint(withdraw, old_pass, new_pass):
         else:
             return withdraw(amount, new_new_pass)
     return joint
+
 
 def remainders_generator(m):
     """
@@ -236,6 +247,7 @@ def remainders_generator(m):
     for i in range(m):
         yield generator(i, m)
 
+
 def naturals():
     """A generator function that yields the infinite sequence of natural
     numbers, starting at 1.
@@ -250,4 +262,3 @@ def naturals():
     while True:
         yield i
         i += 1
-
