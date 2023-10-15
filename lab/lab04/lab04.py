@@ -1,8 +1,8 @@
 LAB_SOURCE_FILE = __file__
 
 
-
 this_file = __file__
+
 
 def skip_add(n):
     """ Takes a number n and returns n + n-2 + n-4 + n-6 + ... + 0.
@@ -74,7 +74,8 @@ def paths(m, n):
 
 def max_subseq(n, t):
     """
-    Return the maximum subsequence of length at most t that can be found in the given number n.
+    Return the maximum subsequence of length at most t that can be found in
+    the given number n.
     For example, for n = 20125 and t = 3, we have that the subsequences are
         2
         0
@@ -122,7 +123,7 @@ def max_subseq(n, t):
             return x
         else:
             return max(x % 10, find_biggest(x // 10))
-    
+
     def digit_of_biggest(x):
         if x % 10 == find_biggest(x):
             return 1
@@ -184,6 +185,3 @@ def add_chars(w1, w2):
         return add_chars(w1[1:], w2[1:])
     else:
         return w2[0] + add_chars(w1, w2[1:])
-
-
-
